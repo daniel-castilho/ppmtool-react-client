@@ -1,13 +1,11 @@
 import React, { Component } from "react";
 import ProjectItem from "./Project/ProjectItem";
-import Header from "./Leiaute/Header";
 
 class Dashboard extends Component {
 	render() {
 		return (
 			<div className="">
-				<h1 className="mr-1">Dashboard</h1>
-				<Header />
+				<h1 className="alert alert-warning">Dashboard</h1>
 				<ProjectItem />
 			</div>
 		);
