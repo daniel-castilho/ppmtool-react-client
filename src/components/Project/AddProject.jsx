@@ -13,12 +13,19 @@ class AddProject extends Component {
 			description: "",
 			start_date: "",
 			end_date: "",
+			errors: {},
 		};
 	}
 
 	handleChange = (e) => {
 		this.setState({ [e.target.name]: e.target.value });
 	};
+
+	componentWillReceiveProps(nextProps) {
+		if (nextProps.errors) {
+			this.setState({ errors: nextProps.errors });
+		}
+	}
 
 	onSubmit = (e) => {
 		e.preventDefault();
@@ -34,6 +41,7 @@ class AddProject extends Component {
 	};
 
 	render() {
+		const { errors } = this.state;
 		return (
 			<div className="project">
 				<div className="container">
@@ -53,6 +61,7 @@ class AddProject extends Component {
 										value={this.state.projectName}
 										onChange={this.handleChange}
 									/>
+									<p>{errors.projectName}</p>
 								</div>
 								<div className="form-group">
 									<input
@@ -63,6 +72,7 @@ class AddProject extends Component {
 										value={this.state.projectIdentifier}
 										onChange={this.handleChange}
 									/>
+									<p>{errors.projectIdentifier}</p>
 								</div>
 
 								<div className="form-group">
@@ -73,6 +83,7 @@ class AddProject extends Component {
 										value={this.state.description}
 										onChange={this.handleChange}
 									></textarea>
+									<p>{errors.description}</p>
 								</div>
 								<h6>Start Date</h6>
 								<div className="form-group">
@@ -110,6 +121,11 @@ class AddProject extends Component {
 
 AddProject.propTypes = {
 	createProject: PropTypes.func.isRequired,
+	errors: PropTypes.object.isRequired,
 };
 
-export default connect(null, { createProject })(AddProject);
+const mapStateToProps = (state) => ({
+	errors: state.errors,
+});
+
+export default connect(mapStateToProps, { createProject })(AddProject);
